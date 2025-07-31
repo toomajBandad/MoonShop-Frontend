@@ -1,0 +1,22 @@
+.container {
+  text-align: center;
+  padding: 4rem;
+  font-family: sans-serif;
+  background-color: #f8f8f8;
+  height: 100vh;
+}
+.title {
+  font-size: 3rem;
+  color: #ed1944;
+}
+.message {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  color: #333;
+}
+.link {
+  font-size: 1rem;
+  color: #19b8da;
+  text-decoration: none;
+  font-weight: bold;
+}

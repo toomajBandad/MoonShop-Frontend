@@ -1,0 +1,16 @@
+.sider__item {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px;
+  padding-left: 20px;
+  transition: background-color 0.3s ease;
+  color: rgb(78, 78, 78);
+}
+.sider__item.active {
+  border-left: 5px solid #ed1944;
+  background-color: #ffbac85a;
+  color: black;
+}

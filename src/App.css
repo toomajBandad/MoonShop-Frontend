@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-default-red: #ed1944;
+  --color-default-softRed: #ef3f3e;
+  --color-default-grayLight: #cdcdcd;
+  --color-default-gray: #818285;
+  --color-default-black70: #323232;
+  --color-default-yellow: #ffa71b;
+  --color-default-blue: #19b8da;
+  --color-default-green: #12a77e;
+  --color-default-navy: #121c46;
+  --color-default-brown: #d59f6e;
+}
+:root {
+  --color-default-red: #ed1944;
+  --color-default-softRed: #ef3f3e;
+  --color-default-grayLight: #cdcdcd;
+  --color-default-gray: #818285;
+  --color-default-black70: #323232;
+  --color-default-yellow: #ffa71b;
+  --color-default-blue: #19b8da;
+  --color-default-green: #12a77e;
+  --color-default-navy: #121c46;
+  --color-default-brown: #d59f6e;
+}
+
+@font-face {
+  font-family: "LogoStyle";
+  src: url("./fonts/Fascinate/FascinateInline-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "mainTitle";
+  src: url("./fonts/DM_Serif/DMSerifText-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.logo-style {
+  font-family: "LogoStyle", sans-serif;
+  font-size: 2rem;
+  font-weight: 100;
+}
+.mainTitle {
+  font-family: "mainTitle", sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  text-decoration: underline;
+}
+body {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: var(--color-default-black70);
+}

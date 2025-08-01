@@ -10,6 +10,7 @@ import Search from "./pages/Search/Search";
 import Product from "./pages/Product/Product";
 import { ToastContainer } from "react-toastify";
 import ShopingCart from "./pages/ShopingCart/ShopingCart";
+import Admin from "./pages/Admin/Admin";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/search/:param" element={<Search />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/shopingCart/:userId" element={<ShopingCart />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

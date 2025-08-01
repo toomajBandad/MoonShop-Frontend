@@ -86,6 +86,12 @@ export default function Topbar() {
                   >
                     Logout
                   </div>
+                     <div
+                    className="userMenu__item cursor-pointer"
+                    onClick={() => navigate("/admin")}
+                  >
+                    Admin
+                  </div>
                 </div>
               )}
             </div>

@@ -100,10 +100,11 @@ export default function ShopingCart() {
           country: "Spain",
         },
         paymentMethod: "PayPal",
-        totalPrice:"2000",
+        totalPrice: "2000",
       };
+      console.log(orderData);
 
-      const response = await axios.post(`${appUrl}/orders`, orderData);
+      const response = await axios.post(`${appUrl}/order`, orderData);
       console.log(response);
 
       alert("Order placed successfully!");

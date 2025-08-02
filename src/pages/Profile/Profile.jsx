@@ -9,6 +9,7 @@ import { LuStore } from "react-icons/lu";
 import { MdHistory } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import YourProfile from "../../components/YourProfile/YourProfile";
+import YourOrders from "../../components/YourOrders/YourOrders";
 
 export default function Profile() {
   const [currentMenu, setCurrentMenu] = useState("");
@@ -79,6 +80,7 @@ export default function Profile() {
       </div>
       <div className="profile__main w-full px-4">
         {currentMenu === "Your profile" && <YourProfile />}
+        {currentMenu === "Your orders" && <YourOrders />}
       </div>
     </div>
   );

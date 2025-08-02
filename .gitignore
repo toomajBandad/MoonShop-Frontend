@@ -10,6 +10,7 @@ lerna-debug.log*
 
 *.png
 *.jpg
+*.webp
 
 
 node_modules

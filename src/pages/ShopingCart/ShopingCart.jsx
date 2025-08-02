@@ -10,6 +10,7 @@ import { AiOutlineFileProtect } from "react-icons/ai";
 
 export default function ShopingCart() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
+  const { userInfos } = useAuth();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
   const { userId } = useParams();
@@ -82,6 +83,36 @@ export default function ShopingCart() {
       });
   };
 
+  const handlePlaceOrder = async () => {
+    try {
+      const orderData = {
+        userId,
+        items: cartItems.map((item) => ({
+          productId: item.product._id,
+          quantity: item.quantity,
+          price: item.product.price,
+        })),
+        shippingAddress: {
+          fullName: userInfos.username,
+          address: "Rio minio 19",
+          city: "Madrid",
+          postalCode: "12345",
+          country: "Spain",
+        },
+        paymentMethod: "PayPal",
+        totalPrice:"2000",
+      };
+
+      const response = await axios.post(`${appUrl}/orders`, orderData);
+      console.log(response);
+
+      alert("Order placed successfully!");
+    } catch (error) {
+      console.error("Order creation failed:", error);
+      alert("Something went wrong.");
+    }
+  };
+
   return (
     <div className="shopingCart__container flex justify-center mt-5">
       <div className="shopingCart__mainWrapper grid grid-cols-[1fr_320px] min-h-screen">
@@ -127,7 +158,10 @@ export default function ShopingCart() {
             <div>{totalPrice} $</div>
           </div>
           <div className="flex justify-center items-center mt-8">
-            <div className="flex justify-center items-center w-full bg-default-softRed text-white p-4 rounded-full cursor-pointer hover:scale-x-103 hover:bg-default-red transition-all duration-400 ease-in-out">
+            <div
+              className="flex justify-center items-center w-full bg-default-softRed text-white p-4 rounded-full cursor-pointer hover:scale-x-103 hover:bg-default-red transition-all duration-400 ease-in-out"
+              onClick={handlePlaceOrder}
+            >
               Accept & Checkout
             </div>
           </div>

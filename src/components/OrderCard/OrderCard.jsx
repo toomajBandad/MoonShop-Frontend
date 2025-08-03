@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+
 
 export default function OrderCard({ order }) {
-  useEffect(() => {
-    console.log(order);
-  }, []);
+
 
   return (
     <div className="order__container border-1 border-gray-300">
@@ -13,18 +11,24 @@ export default function OrderCard({ order }) {
       </div>
 
       <div className="order__body flex justify-center items-center w-full p-3">
-        <div className="w-full">test</div>
+        <div className="w-full flex gap-2">
+          {order.items.map((item) => (
+            <div key={item._id} className="w-30 border-1 border-gray-300">
+              <img src={item.product.images[0]} />
+            </div>
+          ))}
+        </div>
         <div className="flex flex-col justify-center gap-2 w-64">
-          <button className="bg-default-red py-1 text-white rounded-full">
+          <button className="bg-default-red py-1 text-white rounded-full cursor-pointer hover:scale-105 transition-all ease-in-out duration-300">
             Track
           </button>
-          <button className="bg-default-red py-1 text-white rounded-full">
+          <button className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300">
             Leave a review
           </button>
-          <button className="bg-default-red py-1 text-white rounded-full">
+          <button className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300">
             Return/Refund
           </button>
-          <button className="bg-default-red py-1 text-white rounded-full">
+          <button className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300">
             Buy this again
           </button>
         </div>

@@ -1,5 +1,8 @@
 import "./Topbar.css";
 import { LuShoppingCart } from "react-icons/lu";
+import { GrUserAdmin } from "react-icons/gr";
+import { FiLogOut } from "react-icons/fi";
+import { FaRegUser } from "react-icons/fa";
 import { MdLogin } from "react-icons/md";
 import { useNavigate } from "react-router";
 import logoImg from "/images/logo/LOGO.png";
@@ -69,28 +72,34 @@ export default function Topbar() {
           )}
 
           {isLoggedIn && (
-            <div className="userMenu top-10 left-0 w-full bg-white shadow-lg rounded-lg p-4 absolute hidden group-hover:block">
+            <div className="userMenu top-10 -left-20 w-72 z-10 p-4 bg-transparent rounded-lg absolute hidden group-hover:block">
               {isLoggedIn && (
-                <div className="userMenu__dropdown bg-white p-4">
+                <div className="userMenu__dropdown bg-white flex flex-col relative shadow-2xl ">
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
                   <div
-                    className="userMenu__item cursor-pointer"
+                    className="userMenu__item cursor-pointer py-2 px-4 hover:bg-gray-200 flex items-center gap-2 "
                     onClick={() => navigate("/profile")}
                   >
+                    <FaRegUser />
                     Profile
                   </div>
+
                   <div
-                    className="userMenu__item cursor-pointer"
+                    className="userMenu__item cursor-pointer py-2 px-4 hover:bg-gray-200 flex items-center gap-2 "
+                    onClick={() => navigate("/admin")}
+                  >
+                    <GrUserAdmin />
+                    Admin
+                  </div>
+
+                  <div
+                    className="userMenu__item cursor-pointer py-2 px-4 hover:bg-gray-200 flex items-center gap-2 "
                     onClick={() => {
                       userLogout();
                     }}
                   >
+                    <FiLogOut />
                     Logout
-                  </div>
-                     <div
-                    className="userMenu__item cursor-pointer"
-                    onClick={() => navigate("/admin")}
-                  >
-                    Admin
                   </div>
                 </div>
               )}

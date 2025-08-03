@@ -88,7 +88,7 @@ export default function ShopingCart() {
       const orderData = {
         userId,
         items: cartItems.map((item) => ({
-          productId: item.product._id,
+          product: item.product,
           quantity: item.quantity,
           price: item.product.price,
         })),
@@ -102,7 +102,7 @@ export default function ShopingCart() {
         paymentMethod: "PayPal",
         totalPrice: "2000",
       };
-      console.log(orderData);
+      console.log(cartItems);
 
       const response = await axios.post(`${appUrl}/order`, orderData);
       console.log(response);

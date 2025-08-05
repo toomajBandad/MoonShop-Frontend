@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
+import defaultAvatar from "/images/icons/man.png";
 
 export default function Topbar() {
   const navigate = useNavigate();
@@ -58,7 +59,8 @@ export default function Topbar() {
       <div className="topbar__right flex items-center justify-center gap-8 ">
         <div className="relative  group">
           {isLoggedIn ? (
-            <div className="topbar__right__loginWrapper flex items-center justify-center border-gray-500 border-1 px-4 py-2 rounded-lg text-gray-500 gap-2 cursor-pointer">
+            <div className="topbar__right__loginWrapper flex items-center justify-center border-gray-500 border-1 px-2 py-1 rounded-lg text-gray-500 gap-2 cursor-pointer hover:bg-purple-100">
+              <img src={userInfos.avatar ? userInfos.avatar : defaultAvatar} alt="userAvatar" className="w-10"/>
               {userInfos.username}
             </div>
           ) : (
@@ -72,7 +74,7 @@ export default function Topbar() {
           )}
 
           {isLoggedIn && (
-            <div className="userMenu top-10 -left-20 w-72 z-10 p-4 bg-transparent rounded-lg absolute hidden group-hover:block">
+            <div className="userMenu top-10 -left-14 w-72 z-10 p-4 bg-transparent rounded-lg absolute hidden group-hover:block">
               {isLoggedIn && (
                 <div className="userMenu__dropdown bg-white flex flex-col relative shadow-2xl ">
                   <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
@@ -110,8 +112,8 @@ export default function Topbar() {
           className="topbar__right__basketWrapper flex items-center justify-center cursor-pointer relative"
           onClick={() => navigate(`/shopingCart/${userInfos._id}`)}
         >
-          <LuShoppingCart className="text-2xl" />
-          <span className="basketBadge bg-default-softRed px-1 text-xs rounded-full text-white absolute bottom-3 left-4">
+          <LuShoppingCart className="text-2xl hover:scale-110 hover:text-black" />
+          <span className="basketBadge bg-default-softRed px-1 text-xs rounded-full text-white absolute bottom-3 left-4 ">
             {cartTotalQuantity}
           </span>
         </div>

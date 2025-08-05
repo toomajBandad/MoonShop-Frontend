@@ -50,13 +50,22 @@ export default function Search() {
       .get(`${appUrl}/product/byTag/${cleanString}`)
       .then((response) => {
         console.log(response);
-        
+
         setProductList(response.data.productList);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
       });
   }
+
+  const filteredList = productList.filter((product) => {
+    const matchesColor =
+      selectedColor === "All" || product.color === selectedColor;
+    const matchesLowPrice = product.price >= Number(selectedLowPrice);
+    const matchesHighPrice = product.price <= Number(selectedHighPrice);
+
+    return matchesColor && matchesLowPrice && matchesHighPrice;
+  });
 
   return (
     <div className="flex px-4">
@@ -152,13 +161,13 @@ export default function Search() {
         </div>
       </div>
       <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 p-0">
-        {productList.length
-          ? productList.map((product) => (
-              <div key={product._id}>
-                <ProductCard product={product} />
-              </div>
-            ))
-          : null}
+        {filteredList.length > 0 ? (
+          filteredList.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))
+        ) : (
+          <div className="text-center w-full p-8">No products found</div>
+        )}
       </div>
     </div>
   );

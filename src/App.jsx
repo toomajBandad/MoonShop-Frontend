@@ -11,6 +11,7 @@ import Product from "./pages/Product/Product";
 import { ToastContainer } from "react-toastify";
 import ShopingCart from "./pages/ShopingCart/ShopingCart";
 import Admin from "./pages/Admin/Admin";
+import Review from "./pages/Review/Review";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/product/:id" element={<Product />} />
           <Route path="/shopingCart/:userId" element={<ShopingCart />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/review/:id" element={<Review />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

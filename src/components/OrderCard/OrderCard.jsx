@@ -1,7 +1,7 @@
-
+import { Navigate, useNavigate } from "react-router";
 
 export default function OrderCard({ order }) {
-
+  const navigate = useNavigate();
 
   return (
     <div className="order__container border-1 border-gray-300">
@@ -22,7 +22,12 @@ export default function OrderCard({ order }) {
           <button className="bg-default-red py-1 text-white rounded-full cursor-pointer hover:scale-105 transition-all ease-in-out duration-300">
             Track
           </button>
-          <button className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300">
+          <button
+            className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300"
+            onClick={() => {
+              navigate(`/review/${order._id}`);
+            }}
+          >
             Leave a review
           </button>
           <button className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300">

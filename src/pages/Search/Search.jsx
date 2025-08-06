@@ -14,12 +14,12 @@ export default function Search() {
   const [selectedColor, setSelectedColor] = useState("All");
   const [isColorOpen, setIsColorOpen] = useState(false);
 
-  const lowPriceOptions = ["0", "150", "300", "500"];
+  const lowPriceOptions = ["0", "150", "300", "450","600" , "750", "900" , "1050", "1200","1350" , "1500"];
   const [selectedLowPrice, setSelectedLowPrice] = useState("0");
   const [isLowPriceOpen, setIsLowPriceOpen] = useState(false);
 
-  const highPriceOptions = ["100", "200", "400", "600"];
-  const [selectedHighPrice, setSelectedHighPrice] = useState("600");
+  const highPriceOptions = ["100", "250", "400", "550","700","850","1000","1150","1300","1450","1600"];
+  const [selectedHighPrice, setSelectedHighPrice] = useState("1600");
   const [isHighPriceOpen, setIsHighPriceOpen] = useState(false);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function Search() {
   });
 
   return (
-    <div className="flex px-4">
+    <div className="flex px-0">
       <div className="sidebar__filter w-88 bg-gray-100 flex flex-col">
         <div className="colorSelect__wrapper">
           <div className="relative mx-5">

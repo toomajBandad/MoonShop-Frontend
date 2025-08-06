@@ -10,6 +10,7 @@ import { MdHistory } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import YourProfile from "../../components/YourProfile/YourProfile";
 import YourOrders from "../../components/YourOrders/YourOrders";
+import YourReviews from "../../components/YourReviews/YourReviews";
 
 export default function Profile() {
   const [currentMenu, setCurrentMenu] = useState("");
@@ -81,6 +82,7 @@ export default function Profile() {
       <div className="profile__main w-full px-4">
         {currentMenu === "Your profile" && <YourProfile />}
         {currentMenu === "Your orders" && <YourOrders />}
+        {currentMenu === "Your reviews" && <YourReviews />}
       </div>
     </div>
   );

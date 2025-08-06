@@ -12,6 +12,7 @@ export default function ShopingCart() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
   const { userInfos } = useAuth();
   const [cartItems, setCartItems] = useState([]);
+  const [cartId, setCartId] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
   const { userId } = useParams();
 
@@ -35,6 +36,7 @@ export default function ShopingCart() {
       .get(`${appUrl}/cart/user/${userId}`)
       .then((response) => {
         setCartItems(response.data.items);
+        setCartId(response.data._id);
         calculateTotalPrice(response.data.items);
         updateCart(response.data.items);
       })
@@ -83,6 +85,18 @@ export default function ShopingCart() {
       });
   };
 
+  const handleClearAllCartItems = async () => {
+    console.log(cartId);
+    try {
+      await axios.delete(`${appUrl}/cart/${cartId}`).then((response) => {
+        console.log(response.data);
+        getCartFromServer();
+      });
+    } catch (error) {
+      console.error("Cart delete failed:", error);
+    }
+  };
+
   const handlePlaceOrder = async () => {
     try {
       const orderData = {
@@ -106,7 +120,7 @@ export default function ShopingCart() {
 
       const response = await axios.post(`${appUrl}/order`, orderData);
       console.log(response);
-
+      handleClearAllCartItems();
       alert("Order placed successfully!");
     } catch (error) {
       console.error("Order creation failed:", error);

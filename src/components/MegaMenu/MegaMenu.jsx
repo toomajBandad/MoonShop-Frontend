@@ -64,7 +64,7 @@ export default function MegaMenu({ mainCategoryList, subCategoryList }) {
                                     setActiveMenu(null)
                                   }}
                                   key={ss._id}
-                                  className="submenu-item px-3 py-1 text-gray-500 w-64"
+                                  className="submenu-item px-3 py-1 text-gray-500 w-64 hover:text-default-red"
                                 >
                                   <span className="MegaMenu__title">
                                     {ss.name}

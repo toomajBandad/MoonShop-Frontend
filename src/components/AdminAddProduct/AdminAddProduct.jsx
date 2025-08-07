@@ -4,7 +4,6 @@ import axios from "axios";
 
 export default function AdminAddProduct() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
-  // const [mainCategoryList, setMainCategoryList] = useState([]);
   const [subCategoryList, setSubCategoryList] = useState([]);
 
   useEffect(() => {
@@ -16,9 +15,6 @@ export default function AdminAddProduct() {
     axios
       .get(`${appUrl}/category`)
       .then((response) => {
-        // setMainCategoryList(
-        //   response.data.filter((category) => category.parentId === null)
-        // );
         setSubCategoryList(
           response.data.filter((category) => category.parentId !== null)
         );
@@ -27,6 +23,7 @@ export default function AdminAddProduct() {
         console.error("Error fetching categories:", error);
       });
   };
+
   const {
     register,
     handleSubmit,
@@ -44,12 +41,12 @@ export default function AdminAddProduct() {
     try {
       const processedData = {
         ...data,
-        images: data.images.split(",").map((url) => url.trim()), // ✅ Converts to array
+        images: data.images.split(",").map((url) => url.trim()),
       };
       console.log(processedData);
-      await axios.post(`${appUrl}/product`, processedData); // Adjust endpoint as needed
+      await axios.post(`${appUrl}/product`, processedData);
       alert("Product added successfully!");
-      reset(); // Clear the form
+      reset();
     } catch (error) {
       console.error("Failed to add product:", error);
       alert("Something went wrong.");
@@ -57,112 +54,97 @@ export default function AdminAddProduct() {
   };
 
   return (
-    <div className="formContainer flex justify-center items-center w-full h-full">
+    <div className=" bg-gray-50 flex mt-3  px-4 pb-10">
       <form
-        className="w-full"
+        className="bg-white shadow-lg rounded-xl p-8 w-full max-w-5xl"
         onSubmit={handleSubmit(onSubmit)}
-        style={{ margin: "auto" }}
       >
-        <h2 className="my-5 text-red-500 text-2xl">Add Product</h2>
+        <h2 className="text-3xl font-bold text-red-500 mb-8 text-center">
+          Add Product
+        </h2>
 
-        <div className="grid grid-rows-6 grid-cols-2 gap-1 mt-5">
-          <div className="bg-gray-100 flex flex-col ">
-            <label>Product Name:</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("name", { required: "Product name is required" })}
-              type="text"
-            />
-            {errors.name && (
-              <p className="text-red-400 text-xs">{errors.name.message}</p>
-            )}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Fields */}
+          {[
+            {
+              label: "Product Name",
+              name: "name",
+              type: "text",
+              required: "Product name is required",
+            },
+            {
+              label: "Brand Name",
+              name: "brand",
+              type: "text",
+              required: "Product brand is required",
+            },
+            { label: "Description", name: "desc", type: "textarea" },
+            { label: "Tags (comma separated)", name: "tags", type: "text" },
+            {
+              label: "Price ($)",
+              name: "price",
+              type: "text",
+              required: "Price is required",
+            },
+            {
+              label: "Product discount",
+              name: "discount",
+              type: "text",
+              required: "Product discount is required",
+            },
+            {
+              label: "Product sold",
+              name: "sold",
+              type: "text",
+              required: "Product sold is required",
+            },
+            { label: "Product images", name: "images", type: "textarea" },
+            {
+              label: "Product stock",
+              name: "stock",
+              type: "text",
+              required: "Product stock is required",
+            },
+            {
+              label: "Product ratings",
+              name: "ratings",
+              type: "text",
+              required: "Product ratings is required",
+            },
+            { label: "Product reviews", name: "reviews", type: "text" },
+          ].map(({ label, name, type, required }) => (
+            <div key={name} className="flex flex-col">
+              <label className="text-sm font-medium text-gray-700 mb-1">
+                {label}
+              </label>
+              {type === "textarea" ? (
+                <textarea
+                  {...register(name, required ? { required } : {})}
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+              ) : (
+                <input
+                  type={type}
+                  {...register(name, required ? { required } : {})}
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+              )}
+              {errors[name] && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors[name].message}
+                </p>
+              )}
+            </div>
+          ))}
 
-          <div className="bg-gray-100 flex flex-col">
-            <label>Brand Name:</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("brand", { required: "Product brand is required" })}
-              type="text"
-            />
-            {errors.brand && (
-              <p className="text-red-400 text-xs">{errors.brand.message}</p>
-            )}
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Description:</label>
-            <textarea
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("desc")}
-            />
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Tags (comma separated):</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("tags")}
-              type="text"
-            />
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Price ($):</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("price", {
-                required: "Price is required",
-              })}
-              type="text"
-            />
-            {errors.price && (
-              <p className="text-red-400 text-xs">{errors.price.message}</p>
-            )}
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Product discount:</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("discount", {
-                required: "Product discount is required",
-              })}
-              type="text"
-            />
-            {errors.discount && (
-              <p className="text-red-400 text-xs">{errors.discount.message}</p>
-            )}
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Product sold:</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("sold", { required: "Product sold is required" })}
-              type="text"
-            />
-            {errors.sold && (
-              <p className="text-red-400 text-xs">{errors.sold.message}</p>
-            )}
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Product images:</label>
-            <textarea
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("images")}
-            />
-            {errors.images && (
-              <p className="text-red-400 text-xs">{errors.images.message}</p>
-            )}
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Product category:</label>
+          {/* Category Select */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700 mb-1">
+              Product category
+            </label>
             <select
-              className="border-1 border-gray-400 py-1 mx-3"
               {...register("categoryId", { required: true })}
+              className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
             >
               {subCategoryList.map((cat) => (
                 <option key={cat._id} value={cat._id}>
@@ -172,48 +154,11 @@ export default function AdminAddProduct() {
             </select>
           </div>
 
-          <div className="bg-gray-100 flex flex-col">
-            <label>Product stock:</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("stock", { required: "Product stock is required" })}
-              type="text"
-            />
-            {errors.stock && (
-              <p className="text-red-400 text-xs">{errors.stock.message}</p>
-            )}
-          </div>
-
-          <div className="bg-gray-100 flex flex-col">
-            <label>Product ratings:</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("ratings", {
-                required: "Product ratings is required",
-              })}
-              type="text"
-            />
-            {errors.ratings && (
-              <p className="text-red-400 text-xs">{errors.ratings.message}</p>
-            )}
-          </div>
-
-          <div className="bg-gray-100 flex flex-col ">
-            <label>Product reviews:</label>
-            <input
-              className="border-1 border-gray-400 py-1 mx-3"
-              {...register("reviews")}
-              type="text"
-            />
-            {errors.reviews && (
-              <p className="text-red-400 text-xs">{errors.reviews.message}</p>
-            )}
-          </div>
-
-          <div className="flex justify-center items-center">
+          {/* Submit Button */}
+          <div className="md:col-span-2 flex justify-center mt-6">
             <button
               type="submit"
-              className="bg-red-500 text-white rounded-4xl cursor-pointer hover:bg-red-600 p-5"
+              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full transition duration-200"
             >
               Add Product
             </button>

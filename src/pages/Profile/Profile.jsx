@@ -13,7 +13,7 @@ import YourOrders from "../../components/YourOrders/YourOrders";
 import YourReviews from "../../components/YourReviews/YourReviews";
 
 export default function Profile() {
-  const [currentMenu, setCurrentMenu] = useState("");
+  const [currentMenu, setCurrentMenu] = useState("Your orders");
 
   const listItems = [
     {
@@ -80,9 +80,9 @@ export default function Profile() {
         </ul>
       </div>
       <div className="profile__main w-full px-4">
-        {currentMenu === "Your profile" && <YourProfile />}
         {currentMenu === "Your orders" && <YourOrders />}
         {currentMenu === "Your reviews" && <YourReviews />}
+        {currentMenu === "Your profile" && <YourProfile />}
       </div>
     </div>
   );

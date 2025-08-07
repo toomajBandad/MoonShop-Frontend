@@ -44,7 +44,7 @@ export default function MenuTop() {
       <div className="MenuTop__list flex justify-start gap-2 items-center p-0">
         <div className="MenuTop__item cursor-pointer flex justify-center items-center gap-1.5 py-2 px-4 relative group border-b-2 border-amber-50 hover:border-b-2 hover:border-default-softRed transition-all duration-300">
           <IoIosMenu /> Categories
-          <div className="megaMenu absolute top-10 left-5 w-64 hidden bg-gray-100 group-hover:block border-1 border-gray-300 z-30">
+          <div className="megaMenu absolute top-10 left-0 w-64 hidden bg-gray-100 group-hover:block border-1 border-gray-300 z-30">
             <MegaMenu
               mainCategoryList={mainCategoryList}
               subCategoryList={subCategoryList}

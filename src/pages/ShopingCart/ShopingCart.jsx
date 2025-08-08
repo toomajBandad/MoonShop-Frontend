@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import CardInCart from "../../components/CardInCart/CardInCart";
 import useAuth from "../../hooks/useAuth";
@@ -10,6 +10,7 @@ import { AiOutlineFileProtect } from "react-icons/ai";
 
 export default function ShopingCart() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
   const { userInfos } = useAuth();
   const [cartItems, setCartItems] = useState([]);
   const [cartId, setCartId] = useState([]);
@@ -98,33 +99,49 @@ export default function ShopingCart() {
   };
 
   const handlePlaceOrder = async () => {
-    try {
-      const orderData = {
-        userId,
-        items: cartItems.map((item) => ({
-          product: item.product,
-          quantity: item.quantity,
-          price: item.product.price,
-        })),
-        shippingAddress: {
-          fullName: userInfos.username,
-          address: "Rio minio 19",
-          city: "Madrid",
-          postalCode: "12345",
-          country: "Spain",
-        },
-        paymentMethod: "PayPal",
-        totalPrice: "2000",
-      };
-      console.log(cartItems);
+    if (userInfos.addressesList && userInfos.creditBalance) {
+      try {
+        const orderData = {
+          userId,
+          items: cartItems.map((item) => ({
+            product: item.product,
+            quantity: item.quantity,
+            price: item.product.price,
+          })),
+          shippingAddress: {
+            fullName: userInfos.username,
+            address: "Rio minio 19",
+            city: "Madrid",
+            postalCode: "12345",
+            country: "Spain",
+          },
+          paymentMethod: "PayPal",
+          totalPrice: "2000",
+        };
+        console.log(cartItems);
 
-      const response = await axios.post(`${appUrl}/order`, orderData);
-      console.log(response);
-      handleClearAllCartItems();
-      alert("Order placed successfully!");
-    } catch (error) {
-      console.error("Order creation failed:", error);
-      alert("Something went wrong.");
+        const response = await axios.post(`${appUrl}/order`, orderData);
+        console.log(response);
+        handleClearAllCartItems();
+        alert("Order placed successfully!");
+      } catch (error) {
+        console.error("Order creation failed:", error);
+        alert("Something went wrong.");
+      }
+    } else {
+      await Swal.fire({
+        title: "Error",
+        text: "You must insert all of your profile data first",
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonColor: "#818285",
+        cancelButtonColor: "#ed1944",
+        confirmButtonText: "Go to profile!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/profile");
+        }
+      });
     }
   };
 

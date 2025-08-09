@@ -31,6 +31,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("cartItems", JSON.stringify(cartDatas));
     setcartInfo(cartDatas);
   };
+  const updateUserInfos = (userdata) => {
+    localStorage.setItem("userInfos", JSON.stringify(userdata));
+    setUserInfos(userdata);
+  };
 
   return (
     <AuthContext.Provider
@@ -41,6 +45,7 @@ export const AuthProvider = ({ children }) => {
         isLoggedIn: !!token,
         userInfos,
         cartInfo,
+        updateUserInfos,
         updateCart,
       }}
     >

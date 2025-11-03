@@ -1,0 +1,18 @@
+// components/RenderStars.jsx
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+
+export default function RenderStars({ rating }) {
+  const stars = [];
+
+  for (let i = 1; i <= 5; i++) {
+    if (rating >= i) {
+      stars.push(<FaStar key={i} />);
+    } else if (rating >= i - 0.5) {
+      stars.push(<FaStarHalfAlt key={i} />);
+    } else {
+      stars.push(<FaRegStar key={i} />);
+    }
+  }
+
+  return <div className="flex text-yellow-400 ">{stars}</div>;
+}

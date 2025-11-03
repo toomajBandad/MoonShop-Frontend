@@ -1,10 +1,11 @@
 import { NavLink } from "react-router";
-import { FaStar, FaCircle } from "react-icons/fa";
+import { FaCircle } from "react-icons/fa";
 import { CiTimer } from "react-icons/ci";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import RenderStars from "../../utils/RenderStars";
 
 export default function ProductCard({ product }) {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
@@ -86,8 +87,7 @@ export default function ProductCard({ product }) {
               </div>
               <div className="flex justify-between items-center ">
                 <div className="flex justify-center items-center my-2">
-                  <FaStar className="text-default-yellow mr-2 " />
-                  {product.ratings}
+                  <RenderStars  rating={product.ratings} />
                 </div>
                 <div className="text-default-gray flex items-center gap-1">
                   fastest send

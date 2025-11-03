@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import { FaStar } from "react-icons/fa";
+import RenderStars from "../../utils/RenderStars";
 
 export default function Product() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
@@ -116,10 +117,9 @@ export default function Product() {
           <div className="product__datas flex flex-col mt-5 gap-5 p-5">
             <div className="flex flex-row items-center gap-4">
               <div className="flex items-center gap-1">
-                Customers rating : {productData.ratings}
-                <div className="text-amber-300">
-                  <FaStar />
-                </div>
+                Customers rating :
+                <RenderStars rating={productData.ratings} />{" "}
+                {productData.ratings}
               </div>
               <div className="bg-gray-200 px-2 rounded-2xl cursor-pointer hover:bg-gray-300">
                 reviews

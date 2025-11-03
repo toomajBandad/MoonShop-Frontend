@@ -108,10 +108,11 @@ export default function AdminAddProduct() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h2 className="text-3xl font-bold text-red-500 mb-8 text-center">
-          Add Product
+          Add New Product
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Fields */}
           {inputFields.map(({ label, name, type, required }) => (
             <div key={name} className="flex flex-col">
               <label className="text-sm font-medium text-gray-700 mb-1">

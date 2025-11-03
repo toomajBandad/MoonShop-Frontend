@@ -21,14 +21,13 @@ export default function Review() {
         .get(`${appUrl}/order/${orderId}`)
         .then((res) => {
           setOrderItems(res.data.items);
-          console.log(res.data.items);
         })
         .catch((err) => console.error("Failed to fetch orders", err))
         .finally(() => setLoading(false));
   }, [appUrl, orderId]);
 
   return (
-    <div className="YourOrders__container flex gap-5 mt-5">
+    <div className="YourOrders__container flex gap-2 mt-5 px-20">
       {loading ? (
         <p>Loading items ...</p>
       ) : orderItems.length === 0 ? (

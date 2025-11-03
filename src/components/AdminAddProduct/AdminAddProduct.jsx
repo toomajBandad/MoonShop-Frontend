@@ -5,6 +5,54 @@ import axios from "axios";
 export default function AdminAddProduct() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
   const [subCategoryList, setSubCategoryList] = useState([]);
+  const inputFields = [
+    {
+      label: "Product Name",
+      name: "name",
+      type: "text",
+      required: "Product name is required",
+    },
+    {
+      label: "Brand Name",
+      name: "brand",
+      type: "text",
+      required: "Product brand is required",
+    },
+    { label: "Description", name: "desc", type: "textarea" },
+    { label: "Tags (comma separated)", name: "tags", type: "text" },
+    {
+      label: "Price ($)",
+      name: "price",
+      type: "text",
+      required: "Price is required",
+    },
+    {
+      label: "Product discount",
+      name: "discount",
+      type: "text",
+      required: "Product discount is required",
+    },
+    {
+      label: "Product sold",
+      name: "sold",
+      type: "text",
+      required: "Product sold is required",
+    },
+    { label: "Product images", name: "images", type: "textarea" },
+    {
+      label: "Product stock",
+      name: "stock",
+      type: "text",
+      required: "Product stock is required",
+    },
+    {
+      label: "Product ratings",
+      name: "ratings",
+      type: "text",
+      required: "Product ratings is required",
+    },
+    { label: "Product reviews", name: "reviews", type: "text" },
+  ];
 
   useEffect(() => {
     getCategories();
@@ -64,55 +112,7 @@ export default function AdminAddProduct() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Fields */}
-          {[
-            {
-              label: "Product Name",
-              name: "name",
-              type: "text",
-              required: "Product name is required",
-            },
-            {
-              label: "Brand Name",
-              name: "brand",
-              type: "text",
-              required: "Product brand is required",
-            },
-            { label: "Description", name: "desc", type: "textarea" },
-            { label: "Tags (comma separated)", name: "tags", type: "text" },
-            {
-              label: "Price ($)",
-              name: "price",
-              type: "text",
-              required: "Price is required",
-            },
-            {
-              label: "Product discount",
-              name: "discount",
-              type: "text",
-              required: "Product discount is required",
-            },
-            {
-              label: "Product sold",
-              name: "sold",
-              type: "text",
-              required: "Product sold is required",
-            },
-            { label: "Product images", name: "images", type: "textarea" },
-            {
-              label: "Product stock",
-              name: "stock",
-              type: "text",
-              required: "Product stock is required",
-            },
-            {
-              label: "Product ratings",
-              name: "ratings",
-              type: "text",
-              required: "Product ratings is required",
-            },
-            { label: "Product reviews", name: "reviews", type: "text" },
-          ].map(({ label, name, type, required }) => (
+          {inputFields.map(({ label, name, type, required }) => (
             <div key={name} className="flex flex-col">
               <label className="text-sm font-medium text-gray-700 mb-1">
                 {label}

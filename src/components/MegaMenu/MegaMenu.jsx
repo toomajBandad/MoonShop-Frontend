@@ -60,7 +60,7 @@ export default function MegaMenu({ mainCategoryList, subCategoryList }) {
                               .map((ss) => (
                                 <div
                                   onClick={() => {
-                                    navigate(`/search/${ss.name}`);
+                                    navigate(`/search/?category=${ss.name}`);
                                     setActiveMenu(null)
                                   }}
                                   key={ss._id}

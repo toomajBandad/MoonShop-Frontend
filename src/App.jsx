@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/search/:param" element={<Search />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/shopingCart/:userId" element={<ShopingCart />} />
           <Route path="/admin" element={<Admin />} />

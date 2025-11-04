@@ -1,172 +1,93 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { FaChevronDown } from "react-icons/fa";
+import FilterPanel from "../../components/FilterPanel/FilterPanel";
+
+// Helper to extract query parameters
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 export default function Search() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
-  const params = useParams();
 
-  const [productList, setProductList] = useState([]);
+  const query = useQuery();
+  const category = query.get("category");
+  const search = query.get("search");
+  const minPrice = query.get("minPrice");
+  const maxPrice = query.get("maxPrice");
+  const minDiscount = query.get("minDiscount");
+  const maxDiscount = query.get("maxDiscount");
+  const minRate = query.get("minRate");
+  const maxRate = query.get("maxRate");
 
-  const colorOptions = ["All", "White", "Black", "Gray"];
-  const [selectedColor, setSelectedColor] = useState("All");
-  const [isColorOpen, setIsColorOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const lowPriceOptions = ["0", "150", "300", "450","600" , "750", "900" , "1050", "1200","1350" , "1500"];
-  const [selectedLowPrice, setSelectedLowPrice] = useState("0");
-  const [isLowPriceOpen, setIsLowPriceOpen] = useState(false);
-
-  const highPriceOptions = ["100", "250", "400", "550","700","850","1000","1150","1300","1450","1600"];
-  const [selectedHighPrice, setSelectedHighPrice] = useState("1600");
-  const [isHighPriceOpen, setIsHighPriceOpen] = useState(false);
-
+  // Fetch products when component loads or filters change
   useEffect(() => {
-    if (params.param.includes("tag-")) {
-      getProductByTagFromServer();
-      console.log("tag");
-    } else {
-      getProductFromServer();
-    }
+    const fetchFilteredProducts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+        const response = await axios.get(`${appUrl}/product/all`, {
+          params: {
+            category,
+            search,
+            minPrice,
+            maxPrice,
+            minDiscount,
+            maxDiscount,
+            minRate,
+            maxRate,
+          },
+        });
 
-  function getProductFromServer() {
-    axios
-      .get(`${appUrl}/product/byCat/${params.param}`)
-      .then((response) => {
-        setProductList(response.data.productList);
-      })
-      .catch((error) => {
+        setProducts(response.data ? response.data : []);
+      } catch (error) {
         console.error("Error fetching products:", error);
-      });
-  }
-  function getProductByTagFromServer() {
-    let cleanString = decodeURIComponent(params.param.replace("tag-", ""));
+        setProducts([]);
+        setError("Failed to load products. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    axios
-      .get(`${appUrl}/product/byTag/${cleanString}`)
-      .then((response) => {
-        console.log(response);
-
-        setProductList(response.data.productList);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
-  }
-
-  const filteredList = productList.filter((product) => {
-    const matchesColor =
-      selectedColor === "All" || product.color === selectedColor;
-    const matchesLowPrice = product.price >= Number(selectedLowPrice);
-    const matchesHighPrice = product.price <= Number(selectedHighPrice);
-
-    return matchesColor && matchesLowPrice && matchesHighPrice;
-  });
+    fetchFilteredProducts();
+  }, [
+    category,
+    search,
+    minPrice,
+    maxPrice,
+    appUrl,
+    minDiscount,
+    maxDiscount,
+    minRate,
+    maxRate,
+  ]);
 
   return (
-    <div className="flex px-0">
-      <div className="sidebar__filter w-88 bg-gray-100 flex flex-col">
-        <div className="colorSelect__wrapper">
-          <div className="relative mx-5">
-            <span>Choose Color : </span>
-            <button
-              onClick={() => setIsColorOpen(!isColorOpen)}
-              className="w-full flex justify-between px-4 py-2 border border-gray-300 bg-white rounded-md text-left"
-            >
-              {selectedColor || "Select a color"}
-              <FaChevronDown />
-            </button>
-
-            {isColorOpen && (
-              <ul className="absolute mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
-                {colorOptions.map((color) => (
-                  <li
-                    key={color}
-                    onClick={() => {
-                      setSelectedColor(color);
-                      setIsColorOpen(false);
-                    }}
-                    className="px-4 py-2 hover:bg-red-500  hover:text-white cursor-pointer"
-                  >
-                    {color}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-
-        <div className="lowPriceSelect__wrapper">
-          <div className="relative mx-5">
-            <span>Choose Low Price : </span>
-            <button
-              onClick={() => setIsLowPriceOpen(!isLowPriceOpen)}
-              className="w-full flex justify-between px-4 py-2 border border-gray-300 bg-white rounded-md text-left"
-            >
-              {selectedLowPrice || "Select Price"}
-              <FaChevronDown />
-            </button>
-
-            {isLowPriceOpen && (
-              <ul className="absolute mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
-                {lowPriceOptions.map((price) => (
-                  <li
-                    key={price}
-                    onClick={() => {
-                      setSelectedLowPrice(price);
-                      setIsLowPriceOpen(false);
-                    }}
-                    className="px-4 py-2 hover:bg-red-500  hover:text-white cursor-pointer"
-                  >
-                    {price}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-
-        <div className="highPriceSelect__wrapper">
-          <div className="relative mx-5">
-            <span>Choose High Price : </span>
-            <button
-              onClick={() => setIsHighPriceOpen(!isHighPriceOpen)}
-              className="w-full flex justify-between px-4 py-2 border border-gray-300 bg-white rounded-md text-left"
-            >
-              {selectedHighPrice || "Select Price"}
-              <FaChevronDown />
-            </button>
-
-            {isHighPriceOpen && (
-              <ul className="absolute mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
-                {highPriceOptions.map((price) => (
-                  <li
-                    key={price}
-                    onClick={() => {
-                      setSelectedHighPrice(price);
-                      setIsHighPriceOpen(false);
-                    }}
-                    className="px-4 py-2 hover:bg-red-500  hover:text-white cursor-pointer"
-                  >
-                    {price}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
+    <div className="flex flex-row">
+      <div className="min-w-64">
+        <FilterPanel category={category} />
       </div>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 p-0">
-        {filteredList.length > 0 ? (
-          filteredList.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))
+
+      <div className="max-w-6xl mx-auto p-4">
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
+        {loading ? (
+          <p className="text-gray-500 text-center">Loading products...</p>
+        ) : products.length === 0 ? (
+          <p className="text-gray-500 text-center">No products found.</p>
         ) : (
-          <div className="text-center w-full p-8">No products found</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {products.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
         )}
       </div>
     </div>

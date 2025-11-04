@@ -1,4 +1,3 @@
-// components/RenderStars.jsx
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 
 export default function RenderStars({ rating }) {

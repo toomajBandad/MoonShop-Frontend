@@ -27,7 +27,7 @@ export default function Review() {
   }, [appUrl, orderId]);
 
   return (
-    <div className="YourOrders__container flex gap-2 mt-5 px-20">
+    <div className="YourOrders__container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-10 px-5 xl:px-20">
       {loading ? (
         <p>Loading items ...</p>
       ) : orderItems.length === 0 ? (

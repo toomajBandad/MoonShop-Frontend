@@ -29,7 +29,7 @@ export default function YourReviews() {
 
 
   return (
-    <div className="YourReviews__container grid grid-cols-1 md:grid-cols-2 gap-3 mt-5">
+    <div className="YourReviews__container grid grid-cols-1 lg:grid-cols-2 gap-3 mt-5">
       {loading ? (
         <p>Loading your reviews…</p>
       ) : error ? (

@@ -28,7 +28,6 @@ export default function AdminEditProduct() {
 
   function editProductInfos(product) {
     setSelectedProduct(product);
-    console.log(product);
     setShowEditProductForm(true);
   }
 
@@ -55,7 +54,8 @@ export default function AdminEditProduct() {
 
   useEffect(() => {
     refreshProducts();
-  }, [appUrl]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCreateProduct = () => {
     setShowCreateProductForm(true);
@@ -83,7 +83,7 @@ export default function AdminEditProduct() {
         <>
           <button
             onClick={handleCreateProduct}
-            className="mb-5 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            className="mb-5 px-4 py-2 bg-default-softRed shadow-sm text-white rounded hover:bg-red-600 hover:cursor-pointer transition hover:shadow-lg"
           >
             Create New Product
           </button>
@@ -92,7 +92,6 @@ export default function AdminEditProduct() {
             <p className="text-gray-600">Loading products...</p>
           ) : (
             <div>
-              <h2 className="text-xl font-semibold mb-4">Product Cart</h2>
               {products.length === 0 ? (
                 <p className="text-gray-500">No products available.</p>
               ) : (

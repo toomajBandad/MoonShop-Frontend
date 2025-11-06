@@ -10,6 +10,7 @@ import { GrLocation } from "react-icons/gr";
 import AdminAddCategory from "../../components/AdminAddCategory/AdminAddCategory";
 import AdminAddSubCategory from "../../components/AdminAddSubCategory/AdminAddSubCategory";
 import AdminEditProduct from "../../templates/AdminEditProduct";
+import AdminEditUser from "../../templates/AdminEditUser";
 export default function Admin() {
   const [currentMenu, setCurrentMenu] = useState("Edit Products");
 
@@ -21,36 +22,41 @@ export default function Admin() {
     },
     {
       id: 2,
+      name: "Edit Users",
+      icon: <FaRegUser name="Edit Users" className="text-2xl" />,
+    },
+    {
+      id: 3,
       name: "Add Category",
       icon: <MdOutlineReviews name="Add Category" className="text-2xl" />,
     },
     {
-      id: 3,
+      id: 4,
       name: "Add Sub Category",
       icon: <FaRegUser name="Add Sub Category" className="text-2xl" />,
     },
     {
-      id: 4,
+      id: 5,
       name: "Edit Review",
       icon: <RiCoupon3Line name="Edit Review" className="text-2xl" />,
     },
     {
-      id: 5,
+      id: 6,
       name: "Edit User",
       icon: <LuWallet name="Edit User" className="text-2xl" />,
     },
     {
-      id: 6,
+      id: 7,
       name: "Edit Cart",
       icon: <LuStore name="Edit Cart" className="text-2xl" />,
     },
     {
-      id: 7,
+      id: 8,
       name: "Edit Order",
       icon: <MdHistory name="Edit Order" className="text-2xl" />,
     },
     {
-      id: 8,
+      id: 9,
       name: "Edit Tag",
       icon: <GrLocation name="Edit Tag" className="text-2xl" />,
     },
@@ -79,6 +85,7 @@ export default function Admin() {
       </div>
       <div className="profile__main w-full px-4">
         {currentMenu === "Edit Products" && <AdminEditProduct />}
+        {currentMenu === "Edit Users" && <AdminEditUser />}
         {currentMenu === "Add Category" && <AdminAddCategory />}
         {currentMenu === "Add Sub Category" && <AdminAddSubCategory />}
       </div>

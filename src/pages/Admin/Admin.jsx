@@ -11,13 +11,13 @@ import AdminAddCategory from "../../components/AdminAddCategory/AdminAddCategory
 import AdminAddSubCategory from "../../components/AdminAddSubCategory/AdminAddSubCategory";
 import AdminEditProduct from "../../templates/AdminEditProduct";
 export default function Admin() {
-  const [currentMenu, setCurrentMenu] = useState("Add Product");
+  const [currentMenu, setCurrentMenu] = useState("Edit Products");
 
   const listItems = [
     {
       id: 1,
-      name: "Add Product",
-      icon: <FaRegListAlt name="Add Product" className="text-2xl" />,
+      name: "Edit Products",
+      icon: <FaRegListAlt name="Edit Products" className="text-2xl" />,
     },
     {
       id: 2,
@@ -78,7 +78,7 @@ export default function Admin() {
         </ul>
       </div>
       <div className="profile__main w-full px-4">
-        {currentMenu === "Add Product" && <AdminEditProduct />}
+        {currentMenu === "Edit Products" && <AdminEditProduct />}
         {currentMenu === "Add Category" && <AdminAddCategory />}
         {currentMenu === "Add Sub Category" && <AdminAddSubCategory />}
       </div>

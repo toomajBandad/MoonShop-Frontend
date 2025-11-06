@@ -50,7 +50,7 @@ export default function ProductCardTiny({ product, onRemove, onEdit }) {
             {onRemove && (
               <button
                 className=" bg-red-100 text-red-700 p-1.5 rounded-full hover:bg-red-200 hover:cursor-pointer transition"
-                onClick={(e) => onRemove(e, product)}
+                onClick={() => onRemove(product)}
               >
                 <FaTrash />
               </button>

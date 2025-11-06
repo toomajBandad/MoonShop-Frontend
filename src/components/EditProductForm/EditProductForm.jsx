@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function AdminAddProduct() {
+export default function EditProductForm({ product, onProductUpdated }) {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
   const [subCategoryList, setSubCategoryList] = useState([]);
+
   const inputFields = [
     {
       label: "Product Name",
@@ -51,15 +52,9 @@ export default function AdminAddProduct() {
       type: "text",
       required: "Product ratings is required",
     },
-    { label: "Product reviews", name: "reviews", type: "text" },
   ];
 
   useEffect(() => {
-    getCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getCategories = () => {
     axios
       .get(`${appUrl}/category`)
       .then((response) => {
@@ -70,18 +65,25 @@ export default function AdminAddProduct() {
       .catch((error) => {
         console.error("Error fetching categories:", error);
       });
-  };
+  }, [appUrl]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
-      reviews: [],
-      tags: [],
-      images: [],
+      ...product,
+      tags: Array.isArray(product?.tags)
+        ? product.tags
+            .map((tag) => (typeof tag === "object" ? tag.name : tag))
+            .join(", ")
+        : "",
+      images: Array.isArray(product?.images)
+        ? product.images
+            .map((img) => (typeof img === "object" ? img.url : img))
+            .join(", ")
+        : "",
     },
   });
 
@@ -89,30 +91,35 @@ export default function AdminAddProduct() {
     try {
       const processedData = {
         ...data,
+        tags: data.tags.split(",").map((tag) => tag.trim()),
         images: data.images.split(",").map((url) => url.trim()),
       };
       console.log(processedData);
-      await axios.post(`${appUrl}/product`, processedData);
-      alert("Product added successfully!");
-      reset();
+      
+      await axios.put(`${appUrl}/product/update/${product._id}`, processedData);
+      alert("Product updated successfully!");
+      if (onProductUpdated) onProductUpdated(); // Notify parent to hide form
     } catch (error) {
-      console.error("Failed to add product:", error);
+      console.error("Failed to update product:", error);
       alert("Something went wrong.");
     }
   };
 
+  const handleCancel = () => {
+    if (onProductUpdated) onProductUpdated(); // Notify parent to hide form
+  };
+
   return (
-    <div className=" bg-gray-50 flex mt-3  px-4 pb-10">
+    <div className="bg-gray-50 flex mt-3 px-4 pb-10">
       <form
         className="bg-white shadow-lg rounded-xl p-8 w-full max-w-5xl"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h2 className="text-3xl font-bold text-red-500 mb-8 text-center">
-          Add New Product
+          Edit Product
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Fields */}
           {inputFields.map(({ label, name, type, required }) => (
             <div key={name} className="flex flex-col">
               <label className="text-sm font-medium text-gray-700 mb-1">
@@ -138,30 +145,19 @@ export default function AdminAddProduct() {
             </div>
           ))}
 
-          {/* Category Select */}
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
-              Product category
-            </label>
-            <select
-              {...register("categoryId", { required: true })}
-              className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
-              {subCategoryList.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Submit Button */}
-          <div className="md:col-span-2 flex justify-center mt-6">
+          <div className="md:col-span-2 flex justify-center gap-4 mt-6">
             <button
               type="submit"
               className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full transition duration-200"
             >
-              Add Product
+              Update Product
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-8 rounded-full transition duration-200"
+            >
+              Cancel
             </button>
           </div>
         </div>

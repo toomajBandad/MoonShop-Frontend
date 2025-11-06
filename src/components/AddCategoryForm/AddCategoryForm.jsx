@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-export default function AdminAddCategory() {
+export default function AddCategoryForm() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
 
   const {
@@ -14,7 +15,7 @@ export default function AdminAddCategory() {
   const onSubmit = async (data) => {
     try {
       await axios.post(`${appUrl}/category`, data);
-      console.log("succes");
+      toast.success("category created successfully !!")
       reset();
     } catch (error) {
       console.error("Failed to add category:", error);

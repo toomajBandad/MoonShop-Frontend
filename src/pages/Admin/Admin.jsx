@@ -7,10 +7,10 @@ import { LuWallet } from "react-icons/lu";
 import { LuStore } from "react-icons/lu";
 import { MdHistory } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
-import AdminAddCategory from "../../components/AdminAddCategory/AdminAddCategory";
 import AdminAddSubCategory from "../../components/AdminAddSubCategory/AdminAddSubCategory";
 import AdminEditProduct from "../../templates/AdminEditProduct";
 import AdminEditUser from "../../templates/AdminEditUser";
+import AdminEditCategory from "../../templates/AdminEditCategory";
 export default function Admin() {
   const [currentMenu, setCurrentMenu] = useState("Edit Products");
 
@@ -27,8 +27,8 @@ export default function Admin() {
     },
     {
       id: 3,
-      name: "Add Category",
-      icon: <MdOutlineReviews name="Add Category" className="text-2xl" />,
+      name: "Edit Categories",
+      icon: <MdOutlineReviews name="Edit Categories" className="text-2xl" />,
     },
     {
       id: 4,
@@ -86,7 +86,7 @@ export default function Admin() {
       <div className="profile__main w-full px-4">
         {currentMenu === "Edit Products" && <AdminEditProduct />}
         {currentMenu === "Edit Users" && <AdminEditUser />}
-        {currentMenu === "Add Category" && <AdminAddCategory />}
+        {currentMenu === "Edit Categories" && <AdminEditCategory />}
         {currentMenu === "Add Sub Category" && <AdminAddSubCategory />}
       </div>
     </div>

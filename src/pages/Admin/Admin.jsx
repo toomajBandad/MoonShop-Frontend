@@ -7,12 +7,11 @@ import { LuWallet } from "react-icons/lu";
 import { LuStore } from "react-icons/lu";
 import { MdHistory } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
-import YourProfile from "../../components/YourProfile/YourProfile";
-import AdminAddProduct from "../../components/AdminAddProduct/AdminAddProduct";
 import AdminAddCategory from "../../components/AdminAddCategory/AdminAddCategory";
 import AdminAddSubCategory from "../../components/AdminAddSubCategory/AdminAddSubCategory";
+import AdminEditProduct from "../../templates/AdminEditProduct";
 export default function Admin() {
- const [currentMenu, setCurrentMenu] = useState("Add Product");
+  const [currentMenu, setCurrentMenu] = useState("Add Product");
 
   const listItems = [
     {
@@ -79,7 +78,7 @@ export default function Admin() {
         </ul>
       </div>
       <div className="profile__main w-full px-4">
-        {currentMenu === "Add Product" && <AdminAddProduct />}
+        {currentMenu === "Add Product" && <AdminEditProduct />}
         {currentMenu === "Add Category" && <AdminAddCategory />}
         {currentMenu === "Add Sub Category" && <AdminAddSubCategory />}
       </div>

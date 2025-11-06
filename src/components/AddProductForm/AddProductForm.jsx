@@ -50,7 +50,6 @@ export default function AddProductForm({ onProductAdded }) {
         images: data.images.split(",").map((url) => url.trim()),
       };
       await axios.post(`${appUrl}/product`, processedData);
-      alert("Product added successfully!");
       reset();
       if (onProductAdded) onProductAdded(); // Notify parent to hide form
     } catch (error) {

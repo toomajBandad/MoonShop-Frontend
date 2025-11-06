@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductCardTiny from "../components/ProductCardTiny/ProductCardTiny";
 import AddProductForm from "../components/AddProductForm/AddProductForm";
 import EditProductForm from "../components/EditProductForm/EditProductForm";
+import { toast } from "react-toastify";
 
 export default function AdminEditProduct() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
@@ -68,6 +69,7 @@ export default function AdminEditProduct() {
           onProductAdded={() => {
             setShowCreateProductForm(false);
             refreshProducts();
+            toast.success("Product Created Successfully!");
           }}
         />
       ) : showEditProductForm && selectedProduct ? (
@@ -77,6 +79,7 @@ export default function AdminEditProduct() {
             setShowEditProductForm(false);
             setSelectedProduct(null);
             refreshProducts();
+             toast.success("Product Updated Successfully!");
           }}
         />
       ) : (

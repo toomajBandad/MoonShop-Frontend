@@ -97,7 +97,6 @@ export default function EditProductForm({ product, onProductUpdated }) {
       console.log(processedData);
       
       await axios.put(`${appUrl}/product/update/${product._id}`, processedData);
-      alert("Product updated successfully!");
       if (onProductUpdated) onProductUpdated(); // Notify parent to hide form
     } catch (error) {
       console.error("Failed to update product:", error);

@@ -32,7 +32,6 @@ export default function EditUserForm({ user, onUserUpdated }) {
   const onSubmit = async (data) => {
     try {
       await axios.put(`${appUrl}/user/${user._id}`, data);
-      alert("User updated successfully!");
       if (onUserUpdated) onUserUpdated(); // Notify parent to hide form
     } catch (error) {
       console.error("Failed to update User:", error);

@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import UserTinyCard from "../components/UserTinyCard/UserTinyCard";
 import EditUserForm from "../components/EditUserForm/EditUserForm";
+import { toast } from "react-toastify";
 
 export default function AdminEditUser() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
@@ -64,6 +65,7 @@ export default function AdminEditUser() {
             setShowEditUserForm(false);
             setSelectedUser(null);
             refreshUsers();
+            toast.success("User updated successfully!");
           }}
         />
       ) : (

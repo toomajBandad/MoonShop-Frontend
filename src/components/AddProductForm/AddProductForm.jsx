@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function AddProductForm({ onProductAdded }) {
+export default function AddProductForm({ onProductAdded ,setShowCreateProductForm}) {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
   const [subCategoryList, setSubCategoryList] = useState([]);
 
@@ -59,7 +59,7 @@ export default function AddProductForm({ onProductAdded }) {
   };
 
   const handleCancel = () => {
-    if (onProductAdded) onProductAdded(); // Notify parent to hide form
+    setShowCreateProductForm(false)
   };
 
   return (

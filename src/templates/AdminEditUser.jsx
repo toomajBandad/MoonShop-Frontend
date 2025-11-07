@@ -61,6 +61,7 @@ export default function AdminEditUser() {
       {showEditUserForm && selectedUser ? (
         <EditUserForm
           user={selectedUser}
+          setShowEditUserForm={setShowEditUserForm}
           onUserUpdated={() => {
             setShowEditUserForm(false);
             setSelectedUser(null);

@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function EditUserForm({ user, onUserUpdated }) {
+export default function EditUserForm({
+  user,
+  onUserUpdated,
+  setShowEditUserForm,
+}) {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
 
   const inputFields = [
@@ -40,7 +44,7 @@ export default function EditUserForm({ user, onUserUpdated }) {
   };
 
   const handleCancel = () => {
-    if (onUserUpdated) onUserUpdated(); // Notify parent to hide form
+    setShowEditUserForm(false);
   };
 
   return (

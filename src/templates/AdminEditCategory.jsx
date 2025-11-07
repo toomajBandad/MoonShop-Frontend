@@ -11,9 +11,24 @@ export default function AdminEditCategory() {
 
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [mainCategoryList, setMainCategoryList] = useState([]);
   const [showCreateCategoryForm, setShowCreateCategoryForm] = useState(false);
   const [showEditCategoryForm, setShowEditCategoryForm] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${appUrl}/category`)
+      .then((response) => {
+        const mainDataCategories = response.data.filter(
+          (category) => category.parentId === null
+        );
+        setMainCategoryList(mainDataCategories);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, [appUrl]);
 
   const refreshCategories = async () => {
     setLoading(true);
@@ -61,11 +76,12 @@ export default function AdminEditCategory() {
   const handleCreateCategory = () => {
     setShowCreateCategoryForm(true);
   };
-
   return (
     <div className="p-5 md:p-10">
       {showCreateCategoryForm ? (
         <AddCategoryForm
+          setShowCreateCategoryForm={setShowCreateCategoryForm}
+          mainCategoryList={mainCategoryList}
           onCategoryAdded={() => {
             setShowCreateCategoryForm(false);
             refreshCategories();
@@ -75,6 +91,8 @@ export default function AdminEditCategory() {
       ) : showEditCategoryForm && selectedCategory ? (
         <EditCategoryForm
           category={selectedCategory}
+          setShowEditCategoryForm={setShowEditCategoryForm}
+          mainCategoryList={mainCategoryList}
           onCategoryUpdated={() => {
             setShowEditCategoryForm(false);
             setSelectedCategory(null);
@@ -84,12 +102,14 @@ export default function AdminEditCategory() {
         />
       ) : (
         <>
-          <button
-            onClick={handleCreateCategory}
-            className="mb-5 px-4 py-2 bg-default-softRed shadow-sm text-white rounded hover:bg-red-600 hover:cursor-pointer transition hover:shadow-lg"
-          >
-            Create New Category
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={handleCreateCategory}
+              className="mb-5 px-4 py-2 bg-default-softRed shadow-sm text-white rounded hover:bg-red-600 hover:cursor-pointer transition hover:shadow-lg"
+            >
+              Create New Category
+            </button>
+          </div>
 
           {loading ? (
             <p className="text-gray-600">Loading Categories...</p>

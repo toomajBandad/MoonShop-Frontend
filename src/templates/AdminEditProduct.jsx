@@ -55,7 +55,7 @@ export default function AdminEditProduct() {
 
   useEffect(() => {
     refreshProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCreateProduct = () => {
@@ -66,6 +66,7 @@ export default function AdminEditProduct() {
     <div className="p-5 md:p-10">
       {showCreateProductForm ? (
         <AddProductForm
+          setShowCreateProductForm={setShowCreateProductForm}
           onProductAdded={() => {
             setShowCreateProductForm(false);
             refreshProducts();
@@ -79,7 +80,7 @@ export default function AdminEditProduct() {
             setShowEditProductForm(false);
             setSelectedProduct(null);
             refreshProducts();
-             toast.success("Product Updated Successfully!");
+            toast.success("Product Updated Successfully!");
           }}
         />
       ) : (

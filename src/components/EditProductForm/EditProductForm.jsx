@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function EditProductForm({ product, onProductUpdated }) {
+export default function EditProductForm({
+  product,
+  onProductUpdated,
+  setShowEditProductForm,
+}) {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
-  const [subCategoryList, setSubCategoryList] = useState([]);
 
   const inputFields = [
     {
@@ -54,19 +56,6 @@ export default function EditProductForm({ product, onProductUpdated }) {
     },
   ];
 
-  useEffect(() => {
-    axios
-      .get(`${appUrl}/category`)
-      .then((response) => {
-        setSubCategoryList(
-          response.data.filter((category) => category.parentId !== null)
-        );
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, [appUrl]);
-
   const {
     register,
     handleSubmit,
@@ -95,7 +84,7 @@ export default function EditProductForm({ product, onProductUpdated }) {
         images: data.images.split(",").map((url) => url.trim()),
       };
       console.log(processedData);
-      
+
       await axios.put(`${appUrl}/product/update/${product._id}`, processedData);
       if (onProductUpdated) onProductUpdated(); // Notify parent to hide form
     } catch (error) {
@@ -105,7 +94,7 @@ export default function EditProductForm({ product, onProductUpdated }) {
   };
 
   const handleCancel = () => {
-    if (onProductUpdated) onProductUpdated(); // Notify parent to hide form
+    setShowEditProductForm(false);
   };
 
   return (

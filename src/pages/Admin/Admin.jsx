@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { FaRegListAlt } from "react-icons/fa";
+
+import { BsBoxSeam } from "react-icons/bs";
+import { LuUsersRound } from "react-icons/lu";
+import { BiCategory } from "react-icons/bi";
+import { BsTags } from "react-icons/bs";
+import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineReviews } from "react-icons/md";
-import { FaRegUser } from "react-icons/fa";
-import { RiCoupon3Line } from "react-icons/ri";
-import { LuWallet } from "react-icons/lu";
-import { LuStore } from "react-icons/lu";
-import { MdHistory } from "react-icons/md";
-import { GrLocation } from "react-icons/gr";
-import AdminAddSubCategory from "../../components/AdminAddSubCategory/AdminAddSubCategory";
+
 import AdminEditProduct from "../../templates/AdminEditProduct";
 import AdminEditUser from "../../templates/AdminEditUser";
 import AdminEditCategory from "../../templates/AdminEditCategory";
+import AdminEditTags from "../../templates/AdminEditTags";
 export default function Admin() {
   const [currentMenu, setCurrentMenu] = useState("Edit Products");
 
@@ -18,47 +18,37 @@ export default function Admin() {
     {
       id: 1,
       name: "Edit Products",
-      icon: <FaRegListAlt name="Edit Products" className="text-2xl" />,
+      icon: <BsBoxSeam name="Edit Products" className="text-2xl" />,
     },
     {
       id: 2,
       name: "Edit Users",
-      icon: <FaRegUser name="Edit Users" className="text-2xl" />,
+      icon: <LuUsersRound name="Edit Users" className="text-2xl" />,
     },
     {
       id: 3,
       name: "Edit Categories",
-      icon: <MdOutlineReviews name="Edit Categories" className="text-2xl" />,
+      icon: <BiCategory name="Edit Categories" className="text-2xl" />,
     },
     {
       id: 4,
-      name: "Add Sub Category",
-      icon: <FaRegUser name="Add Sub Category" className="text-2xl" />,
+      name: "Edit Reviews",
+      icon: <MdOutlineReviews name="Edit Reviews" className="text-2xl" />,
     },
     {
       id: 5,
-      name: "Edit Review",
-      icon: <RiCoupon3Line name="Edit Review" className="text-2xl" />,
+      name: "Edit Carts",
+      icon: <FiShoppingCart name="Edit Carts" className="text-2xl" />,
     },
     {
       id: 6,
-      name: "Edit User",
-      icon: <LuWallet name="Edit User" className="text-2xl" />,
+      name: "Edit Orders",
+      icon: <FiShoppingCart name="Edit Orders" className="text-2xl" />,
     },
     {
       id: 7,
-      name: "Edit Cart",
-      icon: <LuStore name="Edit Cart" className="text-2xl" />,
-    },
-    {
-      id: 8,
-      name: "Edit Order",
-      icon: <MdHistory name="Edit Order" className="text-2xl" />,
-    },
-    {
-      id: 9,
-      name: "Edit Tag",
-      icon: <GrLocation name="Edit Tag" className="text-2xl" />,
+      name: "Edit Tags",
+      icon: <BsTags name="Edit Tags" className="text-2xl" />,
     },
   ];
 
@@ -87,7 +77,7 @@ export default function Admin() {
         {currentMenu === "Edit Products" && <AdminEditProduct />}
         {currentMenu === "Edit Users" && <AdminEditUser />}
         {currentMenu === "Edit Categories" && <AdminEditCategory />}
-        {currentMenu === "Add Sub Category" && <AdminAddSubCategory />}
+        {currentMenu === "Edit Tags" && <AdminEditTags />}
       </div>
     </div>
   );

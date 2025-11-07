@@ -76,6 +76,7 @@ export default function AdminEditProduct() {
       ) : showEditProductForm && selectedProduct ? (
         <EditProductForm
           product={selectedProduct}
+          setShowEditProductForm={setShowEditProductForm}
           onProductUpdated={() => {
             setShowEditProductForm(false);
             setSelectedProduct(null);

@@ -8,7 +8,6 @@ import MegaMenu from "../MegaMenu/MegaMenu";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
 export default function MenuTop() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
   const [mainCategoryList, setMainCategoryList] = useState([]);

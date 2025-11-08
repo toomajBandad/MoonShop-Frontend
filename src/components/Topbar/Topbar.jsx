@@ -1,4 +1,3 @@
-import "./Topbar.css";
 import { LuShoppingCart } from "react-icons/lu";
 import { GrUserAdmin } from "react-icons/gr";
 import { FiLogOut } from "react-icons/fi";
@@ -60,7 +59,11 @@ export default function Topbar() {
         <div className="relative  group">
           {isLoggedIn ? (
             <div className="topbar__right__loginWrapper flex items-center justify-center border-gray-500 border-1 px-2 py-1 rounded-lg text-gray-500 gap-2 cursor-pointer hover:bg-purple-100">
-              <img src={userInfos.avatar ? userInfos.avatar : defaultAvatar} alt="userAvatar" className="w-10"/>
+              <img
+                src={userInfos.avatar ? userInfos.avatar : defaultAvatar}
+                alt="userAvatar"
+                className="w-10"
+              />
               {userInfos.username}
             </div>
           ) : (

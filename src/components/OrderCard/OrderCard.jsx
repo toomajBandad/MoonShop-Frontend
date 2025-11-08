@@ -1,50 +1,55 @@
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function OrderCard({ order }) {
   const navigate = useNavigate();
 
   return (
-    <div className="order__container border-1 border-gray-300">
-      <div className="order__header flex justify-between bg-gray-200 p-3">
-        <h2>{order.status}</h2>
-        <div className="cursor-pointer">View Order details</div>
+    <div className="order__container border border-gray-300 rounded-md shadow-sm text-sm w-full">
+      {/* Header */}
+      <div className="order__header flex justify-between items-center bg-gray-200 p-4 rounded-t-md">
+        <h2 className="font-semibold text-gray-700">Status: {order.status}</h2>
+        <div className="text-blue-600 cursor-pointer hover:underline">View Order details</div>
       </div>
 
-      <div className="order__body flex justify-center items-center w-full p-3">
-        <div className="w-full flex gap-2">
+      {/* Body */}
+      <div className="order__body flex flex-col lg:flex-row justify-between items-start w-full p-3 gap-0">
+        {/* Items */}
+        <div className="flex flex-wrap gap-0 w-full lg:w-2/3">
           {order.items.map((item) => (
-            <div key={item._id} className="w-30 border-1 border-gray-300">
-              <img src={item.product?.images[0]} />
+            <div key={item._id} className="w-24 h-24 border border-gray-300 overflow-hidden">
+              <img
+                src={item.product?.images[0]}
+                alt="Product"
+                className="w-full h-full object-cover"
+              />
             </div>
           ))}
         </div>
-        <div className="flex flex-col justify-center gap-2 w-64">
-          <button className="bg-default-red py-1 text-white rounded-full cursor-pointer hover:scale-105 transition-all ease-in-out duration-300">
+
+        {/* Actions */}
+        <div className="flex flex-col gap-2 w-full lg:w-1/3">
+          <button className="bg-default-red py-2 text-white rounded-full hover:scale-105 transition text-sm">
             Track
           </button>
           <button
-            className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300"
-            onClick={() => {
-              navigate(`/review/${order._id}`);
-            }}
+            className="bg-white py-2 border border-default-red text-default-red rounded-full hover:bg-default-red hover:text-white transition text-sm"
+            onClick={() => navigate(`/review/${order._id}`)}
           >
             Leave a review
           </button>
-          <button className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300">
-            Return/Refund
+          <button className="bg-white py-2 border border-default-red text-default-red rounded-full hover:bg-default-red hover:text-white transition text-sm">
+            Return / Refund
           </button>
-          <button className="bg-white py-1 border-1 border-default-red text-default-red rounded-full cursor-pointer hover:bg-default-red hover:text-white transition-all ease-in-out duration-300">
-            Buy this again
+          <button className="bg-white py-2 border border-default-red text-default-red rounded-full hover:bg-default-red hover:text-white transition text-sm">
+            Buy This Again
           </button>
         </div>
       </div>
 
-      <div className="flex gap-8 p-3 border-t-1 border-gray-300 text-gray-500">
-        <span>
-          {order.items.length} items: {order.totalPrice}$
-        </span>
-        <span> Order Time: {order.createdAt}</span>
-        <span>Order ID: {order._id}</span>
+      {/* Footer */}
+      <div className="flex flex-col sm:flex-row gap-4 p-4 border-t border-gray-300 text-gray-600 text-sm">
+        <span>{order.items.length} items: ${order.totalPrice}</span>
+        <span>Order Time: {new Date(order.createdAt).toLocaleString()}</span>
       </div>
     </div>
   );

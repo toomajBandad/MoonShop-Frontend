@@ -25,8 +25,6 @@ export default function LoginForm() {
   };
 
   const handleRegister = (data) => {
-    console.log("data:", data);
-
     axios
       .post(`${appUrl}/user/newUser`, data)
       .then((response) => {
@@ -58,7 +56,6 @@ export default function LoginForm() {
     axios
       .post(`${appUrl}/user/login`, loginData)
       .then((response) => {
-        console.log("Fetched data:", response.data);
         login(response.data.token, response.data.user);
         updateCart(response.data.cart.items);
       })

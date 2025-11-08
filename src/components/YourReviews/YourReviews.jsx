@@ -9,7 +9,6 @@ export default function YourReviews() {
 
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -27,22 +26,20 @@ export default function YourReviews() {
       .finally(() => setLoading(false));
   }, [appUrl, userInfos._id]);
 
-
   return (
-    <div className="YourReviews__container grid grid-cols-1 lg:grid-cols-2 gap-3 mt-5">
+    <div className="YourReviews__container px-0 mt-5">
       {loading ? (
-        <p>Loading your reviews…</p>
+        <p className="text-center text-gray-500">Loading your reviews…</p>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p className="text-center text-red-500">{error}</p>
       ) : reviews.length === 0 ? (
-        <p>You don’t have any reviews yet.</p>
+        <p className="text-center text-gray-500">You don’t have any reviews yet.</p>
       ) : (
-        reviews.map((review) => (
-          <ReviewCard
-            key={review._id}
-            review={review}
-          />
-        ))
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
+          {reviews.map((review) => (
+            <ReviewCard key={review._id} review={review} />
+          ))}
+        </div>
       )}
     </div>
   );

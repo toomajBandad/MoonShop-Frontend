@@ -18,19 +18,20 @@ export default function Profile() {
   const listItems = [
     {
       id: 1,
+      name: "Your profile",
+      icon: <FaRegUser name="Your profile" className="text-2xl" />,
+    },
+    {
+      id: 2,
       name: "Your orders",
       icon: <FaRegListAlt name="Your orders" className="text-2xl" />,
     },
     {
-      id: 2,
+      id: 3,
       name: "Your reviews",
       icon: <MdOutlineReviews name="Your reviews" className="text-2xl" />,
     },
-    {
-      id: 3,
-      name: "Your profile",
-      icon: <FaRegUser name="Your profile" className="text-2xl" />,
-    },
+
     {
       id: 4,
       name: "Coupons & offers",

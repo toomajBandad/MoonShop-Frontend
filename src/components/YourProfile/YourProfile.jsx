@@ -1,4 +1,3 @@
-import "./YourProfile.css";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";

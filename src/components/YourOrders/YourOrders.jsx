@@ -15,7 +15,6 @@ export default function YourOrders() {
         .get(`${appUrl}/order/user/${userInfos._id}`)
         .then((res) => {
           setOrders(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.error("Failed to fetch orders", err))
         .finally(() => setLoading(false));
@@ -24,13 +23,19 @@ export default function YourOrders() {
   }, [userInfos?._id]);
 
   return (
-    <div className="YourOrders__container flex flex-col gap-5 mt-5">
+    <div className="YourOrders__container flex flex-col gap-5 mt-5 px-0">
       {loading ? (
-        <p>Loading your orders…</p>
+        <p className="text-center text-gray-500">Loading your orders…</p>
       ) : orders.length === 0 ? (
-        <p>You don’t have any orders yet.</p>
+        <p className="text-center text-gray-500">
+          You don’t have any orders yet.
+        </p>
       ) : (
-        orders.map((order) => <OrderCard key={order._id} order={order} />)
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {orders.map((order) => (
+            <OrderCard key={order._id} order={order} />
+          ))}
+        </div>
       )}
     </div>
   );

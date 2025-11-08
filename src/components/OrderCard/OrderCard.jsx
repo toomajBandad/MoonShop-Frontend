@@ -14,7 +14,7 @@ export default function OrderCard({ order }) {
         <div className="w-full flex gap-2">
           {order.items.map((item) => (
             <div key={item._id} className="w-30 border-1 border-gray-300">
-              <img src={item.product.images[0]} />
+              <img src={item.product?.images[0]} />
             </div>
           ))}
         </div>

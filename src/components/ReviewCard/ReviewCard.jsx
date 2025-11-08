@@ -4,7 +4,7 @@ export default function ReviewCard({ review }) {
   return (
     <div className="border border-gray-200 grid grid-cols-2">
       <div className="py-3 flex flex-col items-center justify-center">
-        <div className="font-bold">{review.productId.name}</div>
+        <div className="font-bold">{review.productId?.name}</div>
         <img
           src={review.productId.images?.[0] || "/images/notFound.png"}
           alt={review.productId.name}

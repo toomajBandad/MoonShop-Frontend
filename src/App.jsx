@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import ShopingCart from "./pages/ShopingCart/ShopingCart";
 import Admin from "./pages/Admin/Admin";
 import Review from "./pages/Review/Review";
+import Footer from "./components/Footer/Footer";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/review/:id" element={<Review />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
       <ToastContainer
         className="text-sm"

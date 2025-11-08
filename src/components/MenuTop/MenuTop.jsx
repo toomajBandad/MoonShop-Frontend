@@ -1,4 +1,3 @@
-import "./MenuTop.css";
 import { IoIosMenu } from "react-icons/io";
 import { BiSolidOffer } from "react-icons/bi";
 import { FaFire } from "react-icons/fa";

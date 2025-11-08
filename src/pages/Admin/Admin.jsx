@@ -12,6 +12,7 @@ import AdminEditUser from "../../templates/AdminEditUser";
 import AdminEditCategory from "../../templates/AdminEditCategory";
 import AdminEditTags from "../../templates/AdminEditTags";
 import AdminEditOrders from "../../templates/AdminEditOrders";
+import AdminEditReview from "../../templates/AdminEditReview";
 export default function Admin() {
   const [currentMenu, setCurrentMenu] = useState("Edit Products");
 
@@ -78,6 +79,7 @@ export default function Admin() {
         {currentMenu === "Edit Products" && <AdminEditProduct />}
         {currentMenu === "Edit Users" && <AdminEditUser />}
         {currentMenu === "Edit Categories" && <AdminEditCategory />}
+        {currentMenu === "Edit Reviews" && <AdminEditReview />}
         {currentMenu === "Edit Tags" && <AdminEditTags />}
         {currentMenu === "Edit Orders" && <AdminEditOrders />}
       </div>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { CiImageOff } from "react-icons/ci";
 import RenderStars from "../../utils/RenderStars";

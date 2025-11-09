@@ -10,11 +10,11 @@ export default function FilterPanel({ category }) {
   // Initialize sliders from query params or defaults
   const [discountRange, setDiscountRange] = useState([
     Number(query.get("minDiscount")) || 0,
-    Number(query.get("maxDiscount")) || 100,
+    Number(query.get("maxDiscount")) || 50,
   ]);
   const [priceRange, setPriceRange] = useState([
     Number(query.get("minPrice")) || 10,
-    Number(query.get("maxPrice")) || 1000,
+    Number(query.get("maxPrice")) || 3000,
   ]);
   const [rateRange, setRateRange] = useState([
     Number(query.get("minRate")) || 0,
@@ -40,14 +40,15 @@ export default function FilterPanel({ category }) {
   }, [category, discountRange, priceRange, rateRange]);
 
   const handleReset = () => {
-    setDiscountRange([0, 100]);
-    setPriceRange([10, 1000]);
+    setDiscountRange([0, 50]);
+    setPriceRange([10, 3000]);
     setRateRange([0, 5]);
     navigate(`/search/?category=${category}`);
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-6 p-6 border-1 border-gray-200   rounded-md h-full">
+      <h2 className="text-xl">Filters</h2>
       {/* Discount Slider */}
       <div>
         <label className="block text-sm text-gray-600 mb-1">
@@ -56,7 +57,7 @@ export default function FilterPanel({ category }) {
         <Slider
           range
           min={0}
-          max={100}
+          max={50}
           step={5}
           value={discountRange}
           onChange={setDiscountRange}
@@ -67,6 +68,7 @@ export default function FilterPanel({ category }) {
           ]}
         />
       </div>
+      <hr className="text-gray-300"></hr>
 
       {/* Price Slider */}
       <div>
@@ -75,9 +77,9 @@ export default function FilterPanel({ category }) {
         </label>
         <Slider
           range
-          min={10}
-          max={1000}
-          step={20}
+          min={0}
+          max={3000}
+          step={100}
           value={priceRange}
           onChange={setPriceRange}
           trackStyle={[{ backgroundColor: "#ed1944" }]}
@@ -87,6 +89,7 @@ export default function FilterPanel({ category }) {
           ]}
         />
       </div>
+       <hr className="text-gray-300"></hr>
 
       {/* Rate Slider */}
       <div>

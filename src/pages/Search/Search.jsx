@@ -70,12 +70,12 @@ export default function Search() {
   ]);
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row m-4 gap-4">
       <div className="min-w-64">
         <FilterPanel category={category} />
       </div>
 
-      <div className="max-w-6xl mx-auto p-4">
+      <div className=" mx-auto p-0">
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         {loading ? (

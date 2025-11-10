@@ -67,7 +67,7 @@ export default function ProductCard({ product }) {
           <div className="text-default-red font-bold h-7 text-lg mb-3">
             {product.discount ? "magic sell " : null}
           </div>
-          <div className="flex flex-col ">
+          <div className="flex flex-col gap-3">
             <div className="flex justify-center items-center relative">
               <img
                 className="w-5/6 h-auto"
@@ -79,11 +79,10 @@ export default function ProductCard({ product }) {
               </div>
             </div>
 
-            <div className="flex flex-col mt-5">
-              <div className="reserve h-5"></div>
+            <div className="flex flex-col gap-2">
               <div className="">
-                <h3>{product.name}</h3>
-                <h4>{product.desc}</h4>
+                <h3 className="font-semibold">{product.name}</h3>
+                <p className="line-clamp-3 overflow-hidden text-ellipsis text-gray-500">{product.desc}</p>
               </div>
               <div className="flex justify-between items-center ">
                 <div className="flex justify-center items-center my-2">

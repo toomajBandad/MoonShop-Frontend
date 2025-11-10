@@ -91,10 +91,10 @@ export default function Product() {
 
   return (
     productData && (
-      <div className="Product__container px-10 m-0 mt-20 flex gap-5">
-        <div className="product__leftSide w-2/5">
+      <div className="Product__container px-4 sm:px-6 lg:px-10 mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="product__leftSide ">
           <div className="imageIcons__wrapper relative">
-            <img src={mainImage} className="w-full p-3" alt="productImg" />
+            <img src={mainImage} className="w-full pl-10" alt="productImg" />
             <div className="flex flex-col gap-5 text-2xl absolute top-0 left-0">
               <IoMdHeartEmpty className="cursor-pointer hover:text-black" />
               <IoMdShare className="cursor-pointer hover:text-black" />
@@ -107,7 +107,7 @@ export default function Product() {
 
           <div className="excuses__wrapper"></div>
         </div>
-        <div className="product__rightSide w-3/5 flex flex-col justify-center">
+        <div className="product__rightSide flex flex-col justify-center">
           <div>
             <div className="text-2xl"> {productData.name}</div>
             <div className="text-lg text-gray-600 border-b-1 border-gray-300 pb-4">

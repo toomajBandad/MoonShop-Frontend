@@ -48,21 +48,21 @@ export default function Topbar() {
   };
 
   return (
-    <div className="topbar__container w-full flex justify-between items-center py-4 px-10 shadow-md">
+    <div className="topbar__container w-full flex flex-wrap justify-between items-center py-4 px-4 sm:px-6 lg:px-10 shadow-md">
       <div className="topbar__left flex gap-8">
         <div className="topbar__left__logoWrapper flex items-center justify-center cursor-pointer">
-          <img className="w-36" src={logoImg} onClick={() => navigate("/")} />
+          <img className="w-36" src={logoImg} onClick={() => navigate("/")} alt="Company Logo"/>
         </div>
         <SearchBar />
       </div>
       <div className="topbar__right flex items-center justify-center gap-8 ">
         <div className="relative  group">
           {isLoggedIn ? (
-            <div className="topbar__right__loginWrapper flex items-center justify-center border-gray-500 border-1 px-2 py-1 rounded-lg text-gray-500 gap-2 cursor-pointer hover:bg-purple-100">
+            <div className="topbar__right__loginWrapper flex items-center justify-center border-gray-500 border-1 px-2 py-1 rounded-full text-gray-500 gap-2 cursor-pointer hover:bg-purple-100">
               <img
                 src={userInfos.avatar ? userInfos.avatar : defaultAvatar}
                 alt="userAvatar"
-                className="w-10"
+                className="w-10 h-10 rounded-full"
               />
               {userInfos.username}
             </div>

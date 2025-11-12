@@ -2,7 +2,7 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import { CiImageOff } from "react-icons/ci";
 
 export default function UserTinyCard({ user, onRemove, onEdit }) {
-  const hasImage = Boolean(user?.image);
+  const hasImage = Boolean(user?.avatar);
 
   return (
     <div className="flex items-center border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition duration-300 p-2 max-w-md">
@@ -10,7 +10,7 @@ export default function UserTinyCard({ user, onRemove, onEdit }) {
         <div className="w-24 h-24 flex-shrink-0 overflow-hidden rounded-md bg-gray-100 flex items-center justify-center">
           {hasImage ? (
             <img
-              src={user.image}
+              src={user.avatar}
               alt={user.username}
               className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
             />

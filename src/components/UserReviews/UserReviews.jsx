@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import ReviewCard from "../ReviewCard/ReviewCard";
 
-export default function YourReviews() {
+export default function UserReviews() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
   const { userInfos } = useAuth();
 

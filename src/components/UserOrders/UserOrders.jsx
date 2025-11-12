@@ -3,7 +3,7 @@ import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import OrderCard from "../OrderCard/OrderCard";
 
-export default function YourOrders() {
+export default function UserOrders() {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
   const { userInfos } = useAuth();
   const [orders, setOrders] = useState([]);

@@ -8,27 +8,27 @@ import { LuWallet } from "react-icons/lu";
 import { LuStore } from "react-icons/lu";
 import { MdHistory } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
-import YourProfile from "../../components/YourProfile/YourProfile";
-import YourOrders from "../../components/YourOrders/YourOrders";
-import YourReviews from "../../components/YourReviews/YourReviews";
+import UserProfile from "../../components/UserProfile/UserProfile";
+import UserOrders from "../../components/UserOrders/UserOrders";
+import UserReviews from "../../components/UserReviews/UserReviews";
 
 export default function Profile() {
-  const [currentMenu, setCurrentMenu] = useState("Your profile");
+  const [currentMenu, setCurrentMenu] = useState("User profile");
 
   const listItems = [
     {
       id: 1,
-      name: "Your profile",
+      name: "User profile",
       icon: <FaRegUser name="Your profile" className="text-2xl" />,
     },
     {
       id: 2,
-      name: "Your orders",
+      name: "User orders",
       icon: <FaRegListAlt name="Your orders" className="text-2xl" />,
     },
     {
       id: 3,
-      name: "Your reviews",
+      name: "User reviews",
       icon: <MdOutlineReviews name="Your reviews" className="text-2xl" />,
     },
 
@@ -81,9 +81,9 @@ export default function Profile() {
         </ul>
       </div>
       <div className="profile__main w-full px-4">
-        {currentMenu === "Your profile" && <YourProfile />}
-        {currentMenu === "Your orders" && <YourOrders />}
-        {currentMenu === "Your reviews" && <YourReviews />}
+        {currentMenu === "User profile" && <UserProfile />}
+        {currentMenu === "User orders" && <UserOrders />}
+        {currentMenu === "User reviews" && <UserReviews />}
       </div>
     </div>
   );

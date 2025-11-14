@@ -26,7 +26,7 @@ export default function LoginForm() {
 
   const handleRegister = (data) => {
     axios
-      .post(`${appUrl}/user/newUser`, data)
+      .post(`${appUrl}/user`, data)
       .then((response) => {
         login(response.data.token, response.data.user);
         updateCart(response.data.cart.items);

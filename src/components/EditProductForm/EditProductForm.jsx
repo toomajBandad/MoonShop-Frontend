@@ -1,5 +1,7 @@
+import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import Select from "react-select";
 
 export default function EditProductForm({
   product,
@@ -7,6 +9,78 @@ export default function EditProductForm({
   setShowEditProductForm,
 }) {
   const appUrl = import.meta.env.VITE_BACKEND_URL;
+  const [tagList, setTagList] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false); // ✅ Added
+
+  const tagOptions = useMemo(() => {
+    return tagList.map((tag) => ({
+      value: tag._id,
+      label: tag.name,
+    }));
+  }, [tagList]); // ✅ Optimized
+
+  useEffect(() => {
+    axios
+      .get(`${appUrl}/tag`)
+      .then((response) => setTagList(response.data))
+      .catch((error) => console.error("Error fetching tags:", error));
+  }, [appUrl]);
+
+  useEffect(() => {
+    if (product?.tags && tagList.length > 0) {
+      const initialTags = product.tags.map((tag) =>
+        typeof tag === "object"
+          ? { value: tag._id, label: tag.name }
+          : tagOptions.find((t) => t.value === tag)
+      );
+      setSelectedTags(initialTags.filter(Boolean));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product, tagList]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      ...product,
+      images: Array.isArray(product?.images)
+        ? product.images
+            .map((img) => (typeof img === "object" ? img.url : img))
+            .join(", ")
+        : "",
+    },
+  });
+
+  const onSubmit = async (data) => {
+    setIsSubmitting(true); // ✅ Added
+    const serverTags = selectedTags.map((tag) => tag.value);
+
+    try {
+      const processedData = {
+        ...data,
+        tags: serverTags,
+        images: data.images
+          .split(",")
+          .map((url) => url.trim())
+          .filter(Boolean),
+      };
+
+      await axios.put(`${appUrl}/product/update/${product._id}`, processedData);
+      if (onProductUpdated) onProductUpdated();
+    } catch (error) {
+      console.error("Failed to update product:", error);
+      alert(`Update failed: ${error.response?.data?.message || error.message}`); // ✅ Improved
+    } finally {
+      setIsSubmitting(false); // ✅ Added
+    }
+  };
+
+  const handleCancel = () => {
+    setShowEditProductForm(false);
+  };
 
   const inputFields = [
     {
@@ -22,7 +96,6 @@ export default function EditProductForm({
       required: "Product brand is required",
     },
     { label: "Description", name: "desc", type: "textarea" },
-    { label: "Tags (comma separated)", name: "tags", type: "text" },
     {
       label: "Price ($)",
       name: "price",
@@ -55,47 +128,6 @@ export default function EditProductForm({
       required: "Product ratings is required",
     },
   ];
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      ...product,
-      tags: Array.isArray(product?.tags)
-        ? product.tags
-            .map((tag) => (typeof tag === "object" ? tag.name : tag))
-            .join(", ")
-        : "",
-      images: Array.isArray(product?.images)
-        ? product.images
-            .map((img) => (typeof img === "object" ? img.url : img))
-            .join(", ")
-        : "",
-    },
-  });
-
-  const onSubmit = async (data) => {
-    try {
-      const processedData = {
-        ...data,
-        tags: data.tags.split(",").map((tag) => tag.trim()),
-        images: data.images.split(",").map((url) => url.trim()),
-      };
-      console.log(processedData);
-
-      await axios.put(`${appUrl}/product/update/${product._id}`, processedData);
-      if (onProductUpdated) onProductUpdated(); // Notify parent to hide form
-    } catch (error) {
-      console.error("Failed to update product:", error);
-      alert("Something went wrong.");
-    }
-  };
-
-  const handleCancel = () => {
-    setShowEditProductForm(false);
-  };
 
   return (
     <div className="bg-gray-50 flex mt-3 px-4 pb-10">
@@ -133,12 +165,58 @@ export default function EditProductForm({
             </div>
           ))}
 
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700 mb-1">
+              Product Tags
+            </label>
+            <Select
+              isMulti
+              options={tagOptions}
+              value={selectedTags}
+              onChange={(selected) => setSelectedTags(selected)}
+              className="mt-1"
+              classNamePrefix="react-select"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  borderRadius: "0.375rem",
+                  borderColor: "#D1D5DB",
+                  boxShadow: "none",
+                  padding: "2px",
+                  "&:hover": { borderColor: "#EF4444" },
+                }),
+                multiValue: (base) => ({
+                  ...base,
+                  backgroundColor: "#F87171",
+                  color: "white",
+                }),
+                multiValueLabel: (base) => ({
+                  ...base,
+                  color: "white",
+                }),
+                multiValueRemove: (base) => ({
+                  ...base,
+                  color: "white",
+                  ":hover": {
+                    backgroundColor: "#DC2626",
+                    color: "white",
+                  },
+                }),
+              }}
+            />
+          </div>
+
           <div className="md:col-span-2 flex justify-center gap-4 mt-6">
             <button
               type="submit"
-              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full transition duration-200"
+              disabled={isSubmitting}
+              className={`${
+                isSubmitting
+                  ? "opacity-50 cursor-not-allowed"
+                  : "bg-red-500 hover:bg-red-600"
+              } text-white font-semibold py-3 px-8 rounded-full transition duration-200`}
             >
-              Update Product
+              {isSubmitting ? "Updating..." : "Update Product"}
             </button>
             <button
               type="button"

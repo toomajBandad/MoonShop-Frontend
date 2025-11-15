@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Select from "react-select";
+import { Controller } from "react-hook-form";
 
 export default function AddProductForm({
   onProductAdded,
@@ -18,6 +19,14 @@ export default function AddProductForm({
   const tagOptions = tagList.map((tag) => ({
     value: tag._id,
     label: tag.name,
+  }));
+  const leafOptions = selectedLeafCategories.map((cat) => ({
+    value: cat._id,
+    label: cat.name,
+  }));
+  const subOptions = subCategoryList.map((cat) => ({
+    value: cat._id,
+    label: cat.name,
   }));
 
   const inputFields = [
@@ -110,6 +119,7 @@ export default function AddProductForm({
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -176,48 +186,49 @@ export default function AddProductForm({
               )}
             </div>
           ))}
-
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
+            <label className="text-sm font-semibold text-gray-800 mb-2">
               Sub category
             </label>
-            <select
-              onChange={(e) => setCurrentSubCategory(e.target.value)}
-              className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
-              {subCategoryList.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+            <Select
+              onChange={(selectedOption) =>
+                setCurrentSubCategory(selectedOption?.value)
+              }
+              options={subOptions}
+              className="react-select-container"
+              classNamePrefix="react-select"
+            />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
+            <label className="text-sm font-semibold text-gray-800 mb-2">
               Leaf category
             </label>
-            <select
-              {...register("categoryId", {
-                required: "Leaf category is required",
-              })}
-              disabled={!currentSubCategory}
-              className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
-              <option value="">-- Select Leaf Category --</option>
-              {selectedLeafCategories.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+            <Controller
+              name="categoryId"
+              control={control}
+              rules={{ required: "Leaf category is required" }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={leafOptions}
+                  isDisabled={!currentSubCategory}
+                  className="react-select-container"
+                  classNamePrefix="react-select"
+                  onChange={(selected) => field.onChange(selected?.value)} // ✅ Only send the value
+                  value={leafOptions.find(
+                    (option) => option.value === field.value
+                  )} // ✅ Keep select in sync
+                />
+              )}
+            />
+
             {errors.categoryId && (
               <p className="text-red-500 text-xs mt-1">
                 {errors.categoryId.message}
               </p>
             )}
           </div>
-
           <div className="flex flex-col">
             <label className="text-sm font-semibold text-gray-800 mb-2">
               Product Tags
@@ -232,7 +243,6 @@ export default function AddProductForm({
               classNamePrefix="react-select"
             />
           </div>
-
           <div className="md:col-span-2 flex justify-center gap-4 mt-6">
             <button
               type="submit"

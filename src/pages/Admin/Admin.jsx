@@ -6,6 +6,7 @@ import { BiCategory } from "react-icons/bi";
 import { BsTags } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineReviews } from "react-icons/md";
+import { PiListChecksBold } from "react-icons/pi";
 
 import AdminEditProduct from "../../templates/AdminEditProduct";
 import AdminEditUser from "../../templates/AdminEditUser";
@@ -13,6 +14,7 @@ import AdminEditCategory from "../../templates/AdminEditCategory";
 import AdminEditTags from "../../templates/AdminEditTags";
 import AdminEditOrders from "../../templates/AdminEditOrders";
 import AdminEditReview from "../../templates/AdminEditReview";
+import AdminEditCart from "../../templates/AdminEditCart";
 export default function Admin() {
   const [currentMenu, setCurrentMenu] = useState("Edit Products");
 
@@ -45,7 +47,7 @@ export default function Admin() {
     {
       id: 6,
       name: "Edit Orders",
-      icon: <FiShoppingCart name="Edit Orders" className="text-2xl" />,
+      icon: <PiListChecksBold name="Edit Orders" className="text-2xl" />,
     },
     {
       id: 7,
@@ -80,8 +82,9 @@ export default function Admin() {
         {currentMenu === "Edit Users" && <AdminEditUser />}
         {currentMenu === "Edit Categories" && <AdminEditCategory />}
         {currentMenu === "Edit Reviews" && <AdminEditReview />}
-        {currentMenu === "Edit Tags" && <AdminEditTags />}
+        {currentMenu === "Edit Carts" && <AdminEditCart />}
         {currentMenu === "Edit Orders" && <AdminEditOrders />}
+        {currentMenu === "Edit Tags" && <AdminEditTags />}
       </div>
     </div>
   );
